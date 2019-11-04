@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newchat.R;
 import com.example.newchat.database.model.Room;
+import com.example.newchat.database.model.User;
 
 import java.util.List;
 
@@ -31,6 +32,11 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
         Room room = rooms.get(position);
         holder.name.setText(room.getName());
         holder.desc.setText(room.getDes());
+    }
+    public Room getNote(int position){
+
+        Room todo = rooms.get(position);
+        return todo;
     }
 
     @Override

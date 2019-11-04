@@ -238,7 +238,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 }
                 else
-                    showMessage(task.getException().getLocalizedMessage(),"OK");
+                    showMessage("user register succesful "+task.getException().getLocalizedMessage(),"OK");
             }
         });
     }

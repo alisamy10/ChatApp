@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newchat.R;
+import com.example.newchat.database.model.Room;
 import com.example.newchat.database.model.User;
 
 import java.util.ArrayList;
@@ -29,7 +30,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false));
     }
+    public User getNote(int position){
 
+        User todo = userList.get(position);
+        return todo;
+    }
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         User user = userList.get(position);

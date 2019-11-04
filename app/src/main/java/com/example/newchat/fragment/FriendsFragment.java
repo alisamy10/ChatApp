@@ -1,12 +1,14 @@
 package com.example.newchat.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,6 +26,7 @@ import com.example.newchat.adapter.UsersAdapter;
 import com.example.newchat.database.UsersDao;
 import com.example.newchat.database.model.Room;
 import com.example.newchat.database.model.User;
+import com.example.newchat.helper.SwipeToDeleteCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,7 +84,7 @@ public class FriendsFragment extends BaseFragment {
             }
         });
 
-
+    enableSwipeToDeleteAndUndo();
         return view;
     }
     List<User> users;
@@ -111,6 +114,48 @@ public class FriendsFragment extends BaseFragment {
         super.onStart();
         getAllUsers();
 
+    }
+
+    private void enableSwipeToDeleteAndUndo() {
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getContext()) {
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+
+                showMessage("delete", "ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+
+                        UsersDao.deleteUser(adapter.getNote(viewHolder.getAdapterPosition()), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                getAllUsers();
+                                dialog.dismiss();
+
+                            }
+                        });
+
+
+                    }
+                }, "no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        getAllUsers();
+                        dialog.dismiss();
+
+
+
+                    }
+                },true);
+
+
+
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
     }
 
 

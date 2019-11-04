@@ -143,12 +143,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         hideProgressDialog();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            showMessage("user register succesful ", "ok");
+                            showMessage("user Login succesful ", "ok");
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             finish();
                         } else {
 
-
+                            showMessage("user Login failed "+task.getException().getLocalizedMessage(), "ok");
                         }
 
                         // ...

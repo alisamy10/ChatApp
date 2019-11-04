@@ -35,4 +35,10 @@ public class UsersDao {
         MyDataBase.getUserReference().get().addOnCompleteListener(onCompletionListener);
 
     }
+    public static void deleteRoom(Room room, OnCompleteListener<Void> onCompleteListener){
+        MyDataBase.getRoomReference().document(room.getId()).delete().addOnCompleteListener(onCompleteListener);
+    }
+    public static void deleteUser(User user, OnCompleteListener<Void> onCompleteListener){
+        MyDataBase.getUserReference().document(user.getId()).delete().addOnCompleteListener(onCompleteListener);
+    }
 }

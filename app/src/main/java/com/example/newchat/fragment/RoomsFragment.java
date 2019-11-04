@@ -1,11 +1,13 @@
 package com.example.newchat.fragment;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -21,6 +23,7 @@ import com.example.newchat.R;
 import com.example.newchat.adapter.RoomsAdapter;
 import com.example.newchat.database.UsersDao;
 import com.example.newchat.database.model.Room;
+import com.example.newchat.helper.SwipeToDeleteCallback;
 import com.example.newchat.ui.AddRoomActivity;
 import com.example.newchat.ui.HomeActivity;
 import com.example.newchat.ui.MainActivity;
@@ -65,6 +68,9 @@ public class RoomsFragment extends BaseFragment {
         adapter = new RoomsAdapter();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        enableSwipeToDeleteAndUndo();
+
+
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +132,51 @@ public class RoomsFragment extends BaseFragment {
         getAllRooms();
 
     }
+
+    private void enableSwipeToDeleteAndUndo() {
+        final Room room =new Room();
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getContext()) {
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+
+                showMessage("delete", "ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+
+                        UsersDao.deleteRoom(adapter.getNote(viewHolder.getAdapterPosition()), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                getAllRooms();
+                                dialog.dismiss();
+
+                            }
+                        });
+
+
+                    }
+                }, "no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        getAllRooms();
+                        dialog.dismiss();
+
+
+
+                    }
+                },true);
+
+
+
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
+    }
+
+
 
 
 
