@@ -72,20 +72,23 @@ FirebaseAuth auth;
     protected void onStart() {
         super.onStart();
         getAllRooms();
-        auth=FirebaseAuth.getInstance();
+        /*auth=FirebaseAuth.getInstance();
         if(auth.getCurrentUser()==null)
         {
             startActivity(new Intent(this,MainActivity.class));
             finish();
         }
+
+         */
     }
-    List<Room> rooms=new ArrayList<>();
+    List<Room> rooms;
     public void getAllRooms(){
         UsersDao.getRooms(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
+                    rooms=new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Room room =document.toObject(Room.class);
                             rooms.add(room);
