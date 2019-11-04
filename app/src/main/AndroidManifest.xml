@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.AddRoomActivity"></activity>
+        <activity android:name=".ui.AddRoomActivity"
+            android:parentActivityName=".ui.HomeActivity"
+            ></activity>
         <activity
             android:name=".ui.HomeActivity"
             android:label="@string/title_activity_home"

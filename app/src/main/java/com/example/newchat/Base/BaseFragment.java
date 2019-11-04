@@ -3,17 +3,10 @@ package com.example.newchat.Base;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.newchat.R;
 
 
 public class BaseFragment extends Fragment {

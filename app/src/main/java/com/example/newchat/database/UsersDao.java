@@ -31,4 +31,8 @@ public class UsersDao {
         MyDataBase.getRoomReference().get().addOnCompleteListener(onCompletionListener);
 
     }
+    public static void getUsers(OnCompleteListener<QuerySnapshot> onCompletionListener){
+        MyDataBase.getUserReference().get().addOnCompleteListener(onCompletionListener);
+
+    }
 }

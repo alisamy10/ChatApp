@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.newchat.Base.BaseActivity;
 import com.example.newchat.R;
@@ -30,6 +31,11 @@ public class AddRoomActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
         initView();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add Room");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

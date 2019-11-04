@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,12 @@ import com.example.newchat.R;
 import com.example.newchat.adapter.RoomsAdapter;
 import com.example.newchat.database.UsersDao;
 import com.example.newchat.database.model.Room;
+import com.example.newchat.ui.AddRoomActivity;
+import com.example.newchat.ui.HomeActivity;
 import com.example.newchat.ui.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -37,7 +42,9 @@ public class RoomsFragment extends BaseFragment {
     RoomsAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
     ProgressBar progressBar ;
-    FirebaseAuth auth;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
 
     public RoomsFragment() {
@@ -59,8 +66,35 @@ public class RoomsFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddRoomActivity.class));
 
 
+            }
+        });
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setColorSchemeColors(
+                getResources().getColor(android.R.color.holo_blue_bright),
+                getResources().getColor(android.R.color.holo_green_light),
+                getResources().getColor(android.R.color.holo_orange_light),
+                getResources().getColor(android.R.color.holo_red_light ));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        getAllRooms();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 2000);
+
+            }
+        });
 
         return view;
     }
