@@ -4,12 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.newchat.R;
-import com.example.newchat.database.model.Room;
 import com.example.newchat.database.model.User;
 
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false));
     }
+
     public User getNote(int position){
 
         User todo = userList.get(position);
@@ -55,11 +53,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        public CircleImageView profileImage;
-        public TextView displayName;
-        public TextView displayStatus;
+        private CircleImageView profileImage;
+        private TextView displayName;
+        private TextView displayStatus;
 
-        public Holder(@NonNull View itemView) {
+        private Holder(@NonNull View itemView) {
             super(itemView);
             profileImage=itemView.findViewById(R.id.user_single_image);
             displayName=itemView.findViewById(R.id.user_single_name);

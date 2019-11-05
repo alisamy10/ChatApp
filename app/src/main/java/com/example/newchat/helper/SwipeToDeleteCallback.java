@@ -19,7 +19,7 @@ import com.example.newchat.R;
 
 public abstract class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 
-    Context mContext;
+    private Context mContext;
     private Paint mClearPaint;
     private ColorDrawable mBackground;
     private int backgroundColor;
@@ -28,7 +28,7 @@ public abstract class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
     private int intrinsicHeight;
 
 
-    public SwipeToDeleteCallback(Context context) {
+    protected SwipeToDeleteCallback(Context context) {
         mContext = context;
         mBackground = new ColorDrawable();
         backgroundColor = Color.parseColor("#b80f0a");

@@ -54,7 +54,22 @@ public class BaseActivity extends AppCompatActivity {
         builder.setCancelable(isCancelable);
         return builder.show();
     }
-public AlertDialog showMessage(int message, int posActionName,
+
+    public AlertDialog showMessage(String title,String message ,String posActionName,
+                                   DialogInterface.OnClickListener onPosClick,
+                                   String negativeText,
+                                   DialogInterface.OnClickListener onNegativeClick,
+                                   boolean isCancelable){
+        AlertDialog.Builder builder =new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(posActionName,onPosClick );
+        builder.setNegativeButton(negativeText,onNegativeClick );
+        builder.setCancelable(isCancelable);
+        return builder.show();
+    }
+
+    public AlertDialog showMessage(int message, int posActionName,
                                DialogInterface.OnClickListener onClickListener,
                                boolean isCancelable
 ){
@@ -88,4 +103,5 @@ public AlertDialog showMessage(int message, int posActionName,
         if(dialog!=null&&dialog.isShowing())
             dialog.dismiss();
     }
+
 }

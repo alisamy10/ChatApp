@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> {
 
-    List<Room> rooms;
+    private List<Room> rooms;
 
     @NonNull
     @Override
@@ -51,7 +51,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder{
         TextView name,desc;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             desc = itemView.findViewById(R.id.desc);

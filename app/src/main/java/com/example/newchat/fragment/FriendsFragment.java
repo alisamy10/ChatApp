@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,11 +40,12 @@ import java.util.List;
 
 
 public class FriendsFragment extends BaseFragment {
-    RecyclerView recyclerView;
-    UsersAdapter adapter;
-    RecyclerView.LayoutManager layoutManager;
-    ProgressBar progressBar ;
+    private RecyclerView recyclerView;
+    private UsersAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+   private ProgressBar progressBar ;
     private SwipeRefreshLayout swipeRefreshLayout;
+    RecyclerView.ViewHolder viewHolder;
 
 
     public FriendsFragment() {
@@ -83,12 +85,18 @@ public class FriendsFragment extends BaseFragment {
 
             }
         });
+        
+       
+
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                    DividerItemDecoration.VERTICAL));
 
     enableSwipeToDeleteAndUndo();
         return view;
     }
-    List<User> users;
-    public void getAllUsers(){
+    private List<User> users;
+    private void getAllUsers(){
         UsersDao.getUsers(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

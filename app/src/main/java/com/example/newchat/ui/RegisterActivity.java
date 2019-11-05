@@ -181,10 +181,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             String sAge = mAge.getEditText().getText().toString().trim();
             //String sGender=mRadioButtonGender.getText().toString().trim();
             String sGender = "";
+            String status="";
 
 
             if (isValidForm(sNameUser, sEmail, sPassword, sConfirmPassword, sAge, sGender))
-                registerAccount(sNameUser, sEmail, sPassword , Integer.parseInt(sAge));
+                registerAccount(sNameUser, sEmail, sPassword , Integer.parseInt(sAge),status);
         }
         if(v.getId()==R.id.need_new_account) {
             startActivity(new Intent(this, LoginActivity.class));
@@ -192,7 +193,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void registerAccount(final String username, String sEmail, String sPassword, final int age) {
+    private void registerAccount(final String username, String sEmail, String sPassword, final int age , final String status) {
 
         mAuth = FirebaseAuth.getInstance();
         showProgressDialog("please wait ....");
@@ -202,7 +203,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            addUserToDataBase(username,age);
+                            addUserToDataBase(username,age , status);
 
                         }
                         else {
@@ -215,13 +216,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 });
     }
 
-    private void addUserToDataBase(String username , int age) {
+    private void addUserToDataBase(String username , int age , String status) {
         firebaseUser=mAuth.getCurrentUser();
         final User user =new User();
         user.setEmail(firebaseUser.getEmail());
         user.setId(firebaseUser.getUid());
         user.setName(username);
         user.setAge(age);
+        user.setStatus("Welcome");
         UsersDao.addUser(user, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

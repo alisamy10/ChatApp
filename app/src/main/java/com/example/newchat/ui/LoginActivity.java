@@ -100,10 +100,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
-        mImage = (ImageView) findViewById(R.id.image);
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
-        mLogin = (Button) findViewById(R.id.login);
+        mImage =  findViewById(R.id.image);
+        mEmail = findViewById(R.id.email);
+        mPassword =  findViewById(R.id.password);
+        mLogin =  findViewById(R.id.login);
         mLogin.setOnClickListener(this);
 
 

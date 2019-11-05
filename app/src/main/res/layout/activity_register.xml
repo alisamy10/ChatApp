@@ -5,43 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="10"
     tools:context=".ui.RegisterActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
-<ImageView
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="12dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+    <ImageView
     android:id="@+id/image"
     android:layout_width="wrap_content"
     android:src="@drawable/user"
     android:adjustViewBounds="true"
     android:scaleType="fitXY"
-    android:layout_marginTop="12dp"
-    android:layout_weight="2"
+
+    android:paddingTop="8dp"
     android:layout_gravity="center"
-    android:layout_height="0dp"/>
+    android:layout_height="wrap_content"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_name"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User name"
+            android:textSize="22sp"
             android:inputType="textPersonName"
             />
 
@@ -49,22 +61,22 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp">
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        >
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            android:textSize="22sp"
             android:inputType="textEmailAddress"
             />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         app:passwordToggleEnabled="true"
         >
         <EditText
@@ -72,15 +84,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="password"
+            android:textSize="22sp"
             android:inputType="textPassword"
             />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cnfirm"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         app:passwordToggleEnabled="true"
         >
 
@@ -89,20 +101,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="confirm password"
+            android:textSize="22sp"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/age"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Age"
+            android:textSize="22sp"
             android:inputType="number"
             />
 
@@ -111,11 +124,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginTop="12dp">
+        android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/gender"
@@ -134,12 +146,16 @@
             <RadioButton
                 android:id="@+id/radioMale"
                 android:layout_width="wrap_content"
+                android:textSize="22sp"
+
                 android:layout_height="wrap_content"
                 android:text="male" />
 
             <RadioButton
                 android:id="@+id/radioFemale"
                 android:layout_width="wrap_content"
+                android:textSize="22sp"
+
                 android:layout_height="wrap_content"
                  android:layout_marginStart="22dp"
                 android:text="female" />
@@ -149,9 +165,10 @@
     <Button
         android:id="@+id/register"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="24dp"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+
+        android:paddingTop="8dp"
         android:text="Register"
         android:background="@color/colorPrimary"
         android:textColor="#fff"
@@ -159,15 +176,15 @@
     <TextView
         android:id="@+id/need_new_account"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
+        android:paddingTop="8dp"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:text="Already have Account "/>
-
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

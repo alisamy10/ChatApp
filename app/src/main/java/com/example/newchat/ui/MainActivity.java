@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DataUtil.currentUser = task.getResult().toObject(User.class);
+
                         startActivity(new Intent(MainActivity.this, HomeActivity.class));
                         finish();
                     } else {

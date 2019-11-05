@@ -41,10 +41,10 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class RoomsFragment extends BaseFragment {
-    RecyclerView recyclerView;
-    RoomsAdapter adapter;
-    RecyclerView.LayoutManager layoutManager;
-    ProgressBar progressBar ;
+    private RecyclerView recyclerView;
+    private RoomsAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private ProgressBar progressBar ;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -104,8 +104,8 @@ public class RoomsFragment extends BaseFragment {
 
         return view;
     }
-    List<Room> rooms;
-    public void getAllRooms(){
+    private List<Room> rooms;
+    private void getAllRooms(){
         UsersDao.getRooms(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
