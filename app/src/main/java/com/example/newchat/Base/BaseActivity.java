@@ -69,6 +69,7 @@ public class BaseActivity extends AppCompatActivity {
         return builder.show();
     }
 
+
     public AlertDialog showMessage(int message, int posActionName,
                                DialogInterface.OnClickListener onClickListener,
                                boolean isCancelable
@@ -99,9 +100,17 @@ public class BaseActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
     }
+    public void showProgressDialog(String title,String message , boolean isCancelable){
+        dialog =new ProgressDialog(this);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setCancelable(false);
+        dialog.show();
+    }
     public void hideProgressDialog(){
         if(dialog!=null&&dialog.isShowing())
             dialog.dismiss();
     }
+
 
 }

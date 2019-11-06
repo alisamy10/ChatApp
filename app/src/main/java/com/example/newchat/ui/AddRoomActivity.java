@@ -22,21 +22,17 @@ import com.google.android.gms.tasks.Task;
 
 public class AddRoomActivity extends BaseActivity implements View.OnClickListener {
 
-    private EditText mName;
-    private EditText mDesc;
+    private EditText mName , mDesc;
     private Button mAdd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
         initView();
         Toolbar toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Room");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void initView() {
@@ -53,9 +49,7 @@ public class AddRoomActivity extends BaseActivity implements View.OnClickListene
                 String name =mName.getText().toString().trim();
                 String des=mDesc.getText().toString().trim();
                 if(isValidForm(name ,des))
-                {
                     addRoom(name,des);
-                }
                 break;
             default:
                 break;
@@ -86,27 +80,21 @@ public class AddRoomActivity extends BaseActivity implements View.OnClickListene
                     showMessage(task.getException().getLocalizedMessage(),"OK");
             }
         });
-
-
     }
 
     private boolean isValidForm(String name, String des) {
         boolean isValid=true;
-        if(name.isEmpty())
-        {
+        if(name.isEmpty()) {
             mName.setError("Required");
             isValid=false;
-
         }
         else{
             mName.setError(null);
             isValid=true;
         }
         if(des.isEmpty()){
-
             mDesc.setError("Required");
             isValid=false;
-
         }
         else{
             mDesc.setError(null);

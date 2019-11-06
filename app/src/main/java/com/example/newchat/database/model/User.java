@@ -1,8 +1,16 @@
 package com.example.newchat.database.model;
 
 public class User {
-    String id , email , status , name;
+    String id , email , status , name , phone ,image ;
     int age;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public int getAge() {
         return age;
@@ -10,6 +18,14 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public User() {

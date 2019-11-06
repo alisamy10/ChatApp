@@ -1,17 +1,13 @@
 package com.example.newchat.database;
 
-import android.media.MediaPlayer;
 
 import com.example.newchat.database.model.Room;
 import com.example.newchat.database.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Document;
 
 public class UsersDao {
     public static void addUser(User user, OnCompleteListener<Void> onCompletionListener){

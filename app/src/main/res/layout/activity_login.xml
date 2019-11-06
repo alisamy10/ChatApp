@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="10"
     tools:context=".ui.RegisterActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -21,6 +20,14 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
@@ -28,17 +35,13 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:layout_marginTop="12dp"
-        android:layout_weight="2"
+
         android:layout_gravity="center"
-        android:layout_height="0dp"/>
-
-
-
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp">
         <EditText
             android:id="@+id/email"
@@ -50,8 +53,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         app:passwordToggleEnabled="true"
         >
@@ -67,8 +69,7 @@
     <Button
         android:id="@+id/login"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="login"
         android:textSize="22sp"
@@ -76,6 +77,65 @@
         android:textColor="#fff"
         />
 
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:textStyle="bold"
+    android:layout_marginTop="24dp"
+    android:textSize="22sp"
+    android:text="Or Login with phone"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        >
+    <EditText
+        android:id="@+id/phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter phone"
+        android:inputType="number"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/get_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Get a verification code"
+        android:textAllCaps="false"
+        android:textSize="22sp"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
 
 
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        >
+        <EditText
+            android:id="@+id/code_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter code"
+            android:inputType="number"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textSize="22sp"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+
+        />
+</LinearLayout>
+    </ScrollView>
 </LinearLayout>

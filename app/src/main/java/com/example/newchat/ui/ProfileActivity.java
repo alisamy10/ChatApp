@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.newchat.Base.BaseActivity;
 import com.example.newchat.R;
 import com.example.newchat.database.UsersDao;
 import com.example.newchat.database.model.User;
@@ -18,18 +20,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public class ProfileActivity extends AppCompatActivity {
-    FirebaseAuth auth;
-    String name, status;
+public class ProfileActivity extends BaseActivity {
+    private FirebaseAuth auth;
+    private String name, status;
     private ImageView mImageProfile;
-    private TextView mDisplayNameProfile;
-    private TextView mStatusProfile;
-public static String userId;
+    private TextView mDisplayNameProfile , mStatusProfile;
+    public static String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getUserOnce();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -39,13 +42,12 @@ public static String userId;
         mImageProfile = findViewById(R.id.profile_image);
         mDisplayNameProfile = findViewById(R.id.profile_displayName);
         mStatusProfile =  findViewById(R.id.profile_status);
+
+       showProgressDialog("Loading User Data","Please wait while we load the user data.",false);
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        getUserOnce();
-    }
+
     private void getUserOnce() {
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
@@ -60,15 +62,10 @@ public static String userId;
                         mDisplayNameProfile.setText(name);
                         mStatusProfile.setText(status);
                         Toast.makeText(ProfileActivity.this,task.getResult().getString("name")+" "+task.getResult().getString("status") , Toast.LENGTH_SHORT).show();
-
-                    } else {
-
+                        hideProgressDialog();
                     }
                 }
             });
-        } else {
-
         }
     }
-
 }
