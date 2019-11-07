@@ -36,9 +36,9 @@ public class AddRoomActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initView() {
-        mName = (EditText) findViewById(R.id.name);
-        mDesc = (EditText) findViewById(R.id.desc);
-        mAdd = (Button) findViewById(R.id.add);
+        mName =  findViewById(R.id.name);
+        mDesc =  findViewById(R.id.desc);
+        mAdd  =  findViewById(R.id.add);
         mAdd.setOnClickListener(this);
     }
 

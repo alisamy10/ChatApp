@@ -43,22 +43,19 @@ public class FriendsFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private UsersAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-   private ProgressBar progressBar ;
+    private ProgressBar progressBar ;
     private SwipeRefreshLayout swipeRefreshLayout;
-    RecyclerView.ViewHolder viewHolder;
-
+    private List<User> users;
 
     public FriendsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_friends, container, false);
         progressBar = view.findViewById(R.id.progress_bar);
-
         recyclerView= view.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(getContext());
         adapter = new UsersAdapter(null);
@@ -85,9 +82,6 @@ public class FriendsFragment extends BaseFragment {
 
             }
         });
-        
-       
-
 
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                     DividerItemDecoration.VERTICAL));
@@ -95,7 +89,7 @@ public class FriendsFragment extends BaseFragment {
     enableSwipeToDeleteAndUndo();
         return view;
     }
-    private List<User> users;
+
     private void getAllUsers(){
         UsersDao.getUsers(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -128,43 +122,27 @@ public class FriendsFragment extends BaseFragment {
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getContext()) {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
-
                 showMessage("delete", "ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-
                         UsersDao.deleteUser(adapter.getNote(viewHolder.getAdapterPosition()), new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-
                                 getAllUsers();
                                 dialog.dismiss();
-
                             }
                         });
-
-
                     }
                 }, "no", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         getAllUsers();
                         dialog.dismiss();
-
-
-
                     }
                 },true);
-
-
-
             }
         };
-
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(recyclerView);
     }
-
-
 }

@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,12 +30,16 @@ public class HomeActivity extends BaseActivity {
     private Fragment fragment ;
     private TabLayout tabLayout;
     private FirebaseAuth auth;
+    private DrawerLayout drawerLayout ;
+    private long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        drawerLayout=findViewById(R.id.drawer);
+
         setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Chat app");
@@ -73,6 +80,21 @@ public class HomeActivity extends BaseActivity {
         {
             startActivity(new Intent(this,MainActivity.class));
             finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                finishAffinity();
+            } else {
+                Toast.makeText(this, "press again to exit ", Toast.LENGTH_SHORT).show();
+            }
+
+            backPressedTime = System.currentTimeMillis();
         }
     }
 

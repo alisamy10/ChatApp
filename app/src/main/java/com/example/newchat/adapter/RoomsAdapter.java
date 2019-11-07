@@ -4,27 +4,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.newchat.R;
 import com.example.newchat.database.model.Room;
-import com.example.newchat.database.model.User;
-
 import java.util.List;
-
 
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> {
 
     private List<Room> rooms;
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_room,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_room,parent,false));
     }
 
     @Override
@@ -55,7 +48,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             super(itemView);
             name = itemView.findViewById(R.id.name);
             desc = itemView.findViewById(R.id.desc);
-
         }
     }
 }

@@ -45,16 +45,13 @@ public class RoomsFragment extends BaseFragment {
     private RoomsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ProgressBar progressBar ;
-
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private List<Room> rooms;
 
 
     public RoomsFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,7 +101,6 @@ public class RoomsFragment extends BaseFragment {
 
         return view;
     }
-    private List<Room> rooms;
     private void getAllRooms(){
         UsersDao.getRooms(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -138,46 +134,27 @@ public class RoomsFragment extends BaseFragment {
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getContext()) {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
-
                 showMessage("delete", "ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-
                         UsersDao.deleteRoom(adapter.getNote(viewHolder.getAdapterPosition()), new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-
                                 getAllRooms();
                                 dialog.dismiss();
-
                             }
                         });
-
-
                     }
                 }, "no", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         getAllRooms();
                         dialog.dismiss();
-
-
-
                     }
                 },true);
-
-
-
             }
         };
-
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(recyclerView);
     }
-
-
-
-
-
 }

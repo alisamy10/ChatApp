@@ -6,18 +6,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.newchat.R;
 import com.example.newchat.database.model.User;
+import com.example.newchat.ui.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
-
     private List<User> userList = new ArrayList<>();
-
     public UsersAdapter(List<User> userList) {
         this.userList = userList;
     }
@@ -38,6 +38,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
         User user = userList.get(position);
         holder.displayName.setText(user.getName());
         holder.displayStatus.setText(user.getStatus());
+        Glide.with(holder.itemView)
+                .load(user.getImage())
+                .into(holder.profileImage);
 
     }
 
