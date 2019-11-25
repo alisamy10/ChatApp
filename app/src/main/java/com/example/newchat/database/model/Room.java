@@ -1,6 +1,8 @@
 package com.example.newchat.database.model;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
     String name ,des , id;
 
     public Room() {

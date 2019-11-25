@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.newchat.Base.BaseActivity;
 import com.example.newchat.R;
+import com.example.newchat.database.RoomsDao;
 import com.example.newchat.database.UsersDao;
 import com.example.newchat.database.model.Room;
 import com.example.newchat.database.model.User;
@@ -61,7 +62,7 @@ public class AddRoomActivity extends BaseActivity implements View.OnClickListene
        room.setDes(des);
        room.setName(name);
         showProgressDialog("please wait...");
-        UsersDao.addRoom(room, new OnCompleteListener<Void>() {
+        RoomsDao.addRoom(room, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 hideProgressDialog();

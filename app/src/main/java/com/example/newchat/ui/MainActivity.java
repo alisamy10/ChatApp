@@ -25,56 +25,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-             navigate();
-            }
-
-        },1500);
-         */
 
     }
 
     private void initView() {
-        mRegBtnStart = (Button) findViewById(R.id.start_reg_btn);
+        mRegBtnStart = findViewById(R.id.start_reg_btn);
         mRegBtnStart.setOnClickListener(this);
-        mLoginBtnStart = (Button) findViewById(R.id.start_login_btn);
+        mLoginBtnStart = findViewById(R.id.start_login_btn);
         mLoginBtnStart.setOnClickListener(this);
     }
 
-    FirebaseAuth auth;
-
-    private void navigate() {
-        auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-            UsersDao.getCurrentUser(auth.getCurrentUser().getUid(), new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DataUtil.currentUser = task.getResult().toObject(User.class);
-
-                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        finish();
-                    }
-                }
-            });
-        } else {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-        }
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start_reg_btn:
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                finish();
                 break;
             case R.id.start_login_btn:
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
                 // TODO 19/11/04
                 break;
             default:
@@ -82,16 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //navigate();
-        auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser()!=null){
-                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                        finish();
-                    }
-                }
-    }
 
+}
 

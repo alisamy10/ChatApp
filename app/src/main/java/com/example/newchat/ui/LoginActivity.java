@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -119,7 +120,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 String phoneNumber=mNumberPhone.getText().toString().trim();
                 if(isValidPhone(phoneNumber)){
                     Toast.makeText(this, phoneNumber, Toast.LENGTH_SHORT).show();
-                    sendVerificationCode("+20 "+phoneNumber);
+                    sendVerificationCode(phoneNumber);
                 }
                 break;
             case R.id.signin:// TODO 19/11/05
@@ -165,7 +166,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void sendVerificationCode(String phoneNumber) {
-        mAuth=FirebaseAuth.getInstance();
+      //  mAuth=FirebaseAuth.getInstance();
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
@@ -182,7 +183,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
-            Toast.makeText(LoginActivity.this, "invalid Phone Number "+e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Log.i("ali",e+"");
+            Toast.makeText(LoginActivity.this, "invalid Phone Number "+e, Toast.LENGTH_LONG).show();
             mCodeGet.setText(e.getLocalizedMessage());
             mNumberCode.setText(e.getLocalizedMessage());
         }
@@ -203,7 +205,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
          mNumberPhone.requestFocus();
          isValid=false;
      }
-     else if(phoneNumber.length()!=10) {
+     else if(phoneNumber.length()<9) {
          mNumberPhone.setError("password should be equal 11 numbers ");
          mNumberPhone.requestFocus();
          isValid=false;

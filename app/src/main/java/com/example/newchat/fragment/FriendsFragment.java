@@ -2,40 +2,36 @@ package com.example.newchat.fragment;
 
 
 import android.content.DialogInterface;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.newchat.Base.BaseFragment;
 import com.example.newchat.R;
-import com.example.newchat.adapter.RoomsAdapter;
 import com.example.newchat.adapter.UsersAdapter;
 import com.example.newchat.database.UsersDao;
-import com.example.newchat.database.model.Room;
 import com.example.newchat.database.model.User;
 import com.example.newchat.helper.SwipeToDeleteCallback;
+import com.example.newchat.ui.ChatFriendsActivity;
+import com.example.newchat.ui.ProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -46,6 +42,8 @@ public class FriendsFragment extends BaseFragment {
     private ProgressBar progressBar ;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<User> users;
+    private MaterialDialog materialDialog;
+
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -85,6 +83,43 @@ public class FriendsFragment extends BaseFragment {
 
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                     DividerItemDecoration.VERTICAL));
+        adapter.setOnClick(new UsersAdapter.OnClick() {
+            @Override
+            public void onItemClick(int pos, final User user) {
+                materialDialog = new MaterialDialog.Builder(getContext())
+                        .items(R.array.friends)
+                        .itemsIds(R.array.friendsIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Intent chatIntent = new Intent(getContext(), ChatFriendsActivity.class);
+                                        chatIntent.putExtra("id", user.getId());
+                                        chatIntent.putExtra("name", user.getName());
+                                        chatIntent.putExtra("image",user.getImage());
+                                        startActivity(chatIntent);
+                                        break;
+                                    case 1:
+                                        Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
+                                        profileIntent.putExtra("id", user.getId());
+                                        profileIntent.putExtra("flag","myfriend");
+                                        startActivity(profileIntent);
+
+
+                                        break;
+                                    case 2:
+                                        materialDialog.dismiss();
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
+
+
+
+            }
+        });
 
     enableSwipeToDeleteAndUndo();
         return view;
@@ -98,16 +133,17 @@ public class FriendsFragment extends BaseFragment {
                     progressBar.setVisibility(View.GONE);
                     users=new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        User room =document.toObject(User.class);
-                        users.add(room);
+                        User user =document.toObject(User.class);
+                        assert user !=null;
+
+
+                        if(!user.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                        users.add(user);
                     }
                     adapter.setList(users);
-
                 }
                 else
-                {
                     showMessage(task.getException().getLocalizedMessage(),"OK");
-                }
             }
         });
     }

@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.example.newchat.Base.BaseActivity;
 import com.example.newchat.R;
+import com.example.newchat.database.UsersDao;
+import com.example.newchat.database.model.User;
 import com.example.newchat.fragment.FriendsFragment;
 import com.example.newchat.fragment.MessageFragment;
 import com.example.newchat.fragment.RoomsFragment;
+import com.example.newchat.util.DataUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,10 +18,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -80,6 +83,19 @@ public class HomeActivity extends BaseActivity {
         {
             startActivity(new Intent(this,MainActivity.class));
             finish();
+        }
+
+        else
+        {
+            UsersDao.getCurrentUser(auth.getCurrentUser().getUid(), new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DataUtil.currentUser = task.getResult().toObject(User.class);
+                    }
+                }
+            });
+
         }
     }
 
@@ -157,11 +173,16 @@ public class HomeActivity extends BaseActivity {
                 }
             },true);
         }
-        if(item.getItemId() == R.id.main_settings_btn)
-            startActivity(new Intent(this,SettingsActivity.class));
+        if(item.getItemId() == R.id.main_settings_btn) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
 
-        if(item.getItemId() == R.id.main_profile_btn)
-            startActivity(new Intent(this,ProfileActivity.class));
+        if(item.getItemId() == R.id.main_profile_btn){
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra("flag","current");
+            startActivity(intent);      }
+
         return true;
     }
 }

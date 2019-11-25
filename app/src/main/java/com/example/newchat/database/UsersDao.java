@@ -16,25 +16,17 @@ public class UsersDao {
     //read user once
     public static void getCurrentUser(String userId, OnCompleteListener<DocumentSnapshot> onCompletionListener){
        MyDataBase.getUserReference().document(userId).get().addOnCompleteListener(onCompletionListener);
+    }
 
-    }
-    public static void addRoom(Room room, OnCompleteListener<Void> onCompletionListener){
-        DocumentReference document =MyDataBase.getRoomReference().document();
-        room.setId(document.getId());
-        document.set(room).addOnCompleteListener(onCompletionListener);
-    }
-    public static void getRooms(OnCompleteListener<QuerySnapshot> onCompletionListener){
-        MyDataBase.getRoomReference().get().addOnCompleteListener(onCompletionListener);
-
-    }
     public static void getUsers(OnCompleteListener<QuerySnapshot> onCompletionListener){
         MyDataBase.getUserReference().get().addOnCompleteListener(onCompletionListener);
+    }
 
-    }
-    public static void deleteRoom(Room room, OnCompleteListener<Void> onCompleteListener){
-        MyDataBase.getRoomReference().document(room.getId()).delete().addOnCompleteListener(onCompleteListener);
-    }
     public static void deleteUser(User user, OnCompleteListener<Void> onCompleteListener){
         MyDataBase.getUserReference().document(user.getId()).delete().addOnCompleteListener(onCompleteListener);
     }
+    public static void updateUser(String userId,String name , String phone , String image , String status, OnCompleteListener<Void> onCompleteListener){
+        MyDataBase.getUserReference().document(userId).update("name",name,"status",status,"image",image,"phone",phone).addOnCompleteListener(onCompleteListener);
+    }
+
 }

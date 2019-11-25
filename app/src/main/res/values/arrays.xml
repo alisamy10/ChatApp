@@ -13,4 +13,16 @@
         <item>Cancel</item>
     </string-array>
 
+    <string-array name="friends">
+        <item>send message</item>
+        <item>open profile</item>
+        <item>Cancel </item>
+    </string-array>
+
+    <string-array name="friendsIds">
+        <item>send message</item>
+        <item>open profile</item>
+        <item>Cancel</item>
+    </string-array>
+
 </resources>

@@ -17,23 +17,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.newchat.Base.BaseFragment;
 import com.example.newchat.R;
 import com.example.newchat.adapter.RoomsAdapter;
+import com.example.newchat.database.RoomsDao;
 import com.example.newchat.database.UsersDao;
 import com.example.newchat.database.model.Room;
 import com.example.newchat.helper.SwipeToDeleteCallback;
 import com.example.newchat.ui.AddRoomActivity;
-import com.example.newchat.ui.HomeActivity;
-import com.example.newchat.ui.MainActivity;
+import com.example.newchat.ui.ChatRoomActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +65,16 @@ public class RoomsFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         enableSwipeToDeleteAndUndo();
-
+            adapter.setOnClick(new RoomsAdapter.OnClick() {
+                @Override
+                public void onItemClick(int pos, Room room) {
+                    Intent intent =new Intent(getContext(), ChatRoomActivity.class);
+                    //intent.putExtra("id",room.getId());
+                    //intent.putExtra("name",room.getName());
+                    intent.putExtra("room",room);
+                    startActivity(intent);
+                }
+            });
 
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
@@ -102,7 +110,7 @@ public class RoomsFragment extends BaseFragment {
         return view;
     }
     private void getAllRooms(){
-        UsersDao.getRooms(new OnCompleteListener<QuerySnapshot>() {
+        RoomsDao.getRooms(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -116,9 +124,7 @@ public class RoomsFragment extends BaseFragment {
 
                 }
                 else
-                {
                     showMessage(task.getException().getLocalizedMessage(),"OK");
-                }
             }
         });
     }
@@ -130,14 +136,13 @@ public class RoomsFragment extends BaseFragment {
     }
 
     private void enableSwipeToDeleteAndUndo() {
-        final Room room =new Room();
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getContext()) {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
                 showMessage("delete", "ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
-                        UsersDao.deleteRoom(adapter.getNote(viewHolder.getAdapterPosition()), new OnCompleteListener<Void>() {
+                        RoomsDao.deleteRoom(adapter.getNote(viewHolder.getAdapterPosition()), new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 getAllRooms();

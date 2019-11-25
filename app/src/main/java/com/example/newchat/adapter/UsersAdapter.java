@@ -10,13 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.newchat.R;
 import com.example.newchat.database.model.User;
-import com.example.newchat.ui.SettingsActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
+    public interface OnClick{
+
+        void onItemClick(int pos, User user);
+
+    }
+    private OnClick onClick;
     private List<User> userList = new ArrayList<>();
     public UsersAdapter(List<User> userList) {
         this.userList = userList;
@@ -33,14 +37,26 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
         User todo = userList.get(position);
         return todo;
     }
+    public void setOnClick(OnClick onClick) {
+        this.onClick = onClick;
+    }
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
-        User user = userList.get(position);
+    public void onBindViewHolder(@NonNull Holder holder, final int position) {
+         final User user = userList.get(position);
         holder.displayName.setText(user.getName());
         holder.displayStatus.setText(user.getStatus());
         Glide.with(holder.itemView)
                 .load(user.getImage())
                 .into(holder.profileImage);
+        if(onClick!=null)
+        {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClick.onItemClick(position,user);
+                }
+            });
+        }
 
     }
 
